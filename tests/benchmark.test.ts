@@ -83,7 +83,15 @@ test("the benchmark server has no scheduled work competing with measured events"
     },
   );
   try {
-    await once(child.stdout!, "data");
+    // The server's first line is the readiness signal. If it dies instead, say so with what it printed to stderr —
+    // waiting on stdout alone would hang the whole suite until the job's own cap.
+    const [chunk] = await Promise.race([
+      once(child.stdout!, "data"),
+      once(child, "exit").then(() => {
+        const why = String(child.stderr?.read() ?? "").slice(-600);
+        throw new Error(`benchmark --server 没起来就退了${why ? `：${why}` : ""}`);
+      }),
+    ]);
     const db = new DatabaseSync(join(home, "hub.db"), { readOnly: true });
     try {
       const row = db.prepare("SELECT count(*) AS count FROM projections WHERE collection='schedules'").get()!;
@@ -92,9 +100,12 @@ test("the benchmark server has no scheduled work competing with measured events"
       db.close();
     }
   } finally {
-    const exited = once(child, "exit");
-    child.kill("SIGTERM");
-    await exited;
+    // A child that already died has no exit event left to fire; waiting on one hangs the suite.
+    if (child.exitCode === null && child.signalCode === null) {
+      const exited = once(child, "exit");
+      child.kill("SIGTERM");
+      await exited;
+    }
     rmSync(home, { recursive: true, force: true });
   }
 });
