@@ -203,7 +203,9 @@ test("one machine, one command: an event, a question, an answer, the work done",
   assert.match(resolved.stdout, /结案了/);
   assert.equal((await state()).recentCards.find((c: any) => c.id === Number(id)).result, "不试了");
   assert.equal(cli("resolve", id).status, 1, "a result has to be written");
-  assert.equal((await get("/")).status, 404);
+  // The one page there is serves from here too: the owner's web client, without the hub knowing it exists.
+  assert.equal((await get("/")).status, 200);
+  assert.equal((await get("/v1/nope")).status, 404, "everything else is still the doors and their refusals");
 });
 
 test("the user's Agents are shown how to set it up, when this is the install in its usual place, and nothing of theirs is touched", () => {
