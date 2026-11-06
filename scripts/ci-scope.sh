@@ -28,8 +28,7 @@ while IFS= read -r file; do
     docs/* | .github/ISSUE_TEMPLATE/* | .github/pull_request_template.md) kind=docs ;;
     tests/simulation.test.ts | sim/enumerate.ts) kind=full ;;
     kernel/* | protocol/* | sim/random.ts | sim/world.ts | sim/invariants.ts) kind=kernel ;;
-    plugins/* | examples/* | skills/* | worker/* | host/* | cli/* | bin/* | scripts/* | tests/* | web/* | install.sh) kind=normal ;;
-    *) kind=full ;;
+    *) kind=normal ;;
   esac
   case "$kind" in
     full) scope=full ;;
