@@ -7,7 +7,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import type { AddressInfo } from "node:net";
 import { join } from "node:path";
 import { after, before, test } from "node:test";
-import { setup } from "./helpers.ts";
+import { setup, beforeCleanup } from "./helpers.ts";
 
 const home = setup("emit");
 const rules = JSON.parse(readFileSync(join(import.meta.dirname, "rules.fixture.json"), "utf8"));
@@ -24,7 +24,10 @@ writeFileSync(rulesFile, JSON.stringify(rules));
 process.env.AGENT_AUTOLOOP_RULES = rulesFile;
 
 const { serve } = await import("../host/http.ts");
-const { addKey, one } = await import("../host/runtime.ts");
+const { addKey, db, one } = await import("../host/runtime.ts");
+beforeCleanup.push(() => {
+  if (db.isOpen) db.close();
+});
 
 const keys = {
   owner: addKey("owner", "owner"),
