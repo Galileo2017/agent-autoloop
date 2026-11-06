@@ -32,8 +32,10 @@ export async function refresh() {
   }
 }
 
-export function startSession() {
+export async function startSession() {
   stopSession();
+  // Read the log from where the state snapshot stands, not from zero: a hub with history would replay all of it.
+  await refresh();
   let cursor = state.value?.seq ?? 0;
   const wire = () => {
     stopStream = openStream(
@@ -48,7 +50,7 @@ export function startSession() {
       },
     );
   };
-  void refresh().then(wire);
+  wire();
 }
 
 export function stopSession() {

@@ -3,20 +3,19 @@
 import { ref } from "vue";
 import { defineComponent } from "vue";
 import { fetchState, setKey } from "./hub";
-import { startSession } from "./session";
 
 export const Login = defineComponent({
   setup() {
     const typed = ref("");
     const wrong = ref(false);
     const busy = ref(false);
+    // The key watcher in app.tsx starts the session; entering only checks that the key opens the door.
     const enter = async () => {
       busy.value = true;
       wrong.value = false;
       setKey(typed.value.trim());
       try {
         await fetchState();
-        startSession();
       } catch {
         wrong.value = true;
         setKey("");
