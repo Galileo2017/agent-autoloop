@@ -16,7 +16,7 @@ Most of us use command-line agents like Claude Code or Codex by babysitting a te
 
 - **One machine, one install command.** Runs on Windows, macOS, or Linux. No cloud server or inbound ports required.
 - **Connect a new agent in one line.** No SDK, no agent source code to fork. Any CLI tool that takes a prompt and prints a final reply can plug in.
-- **No web dashboard.** Cards reach you on Feishu, DingTalk, WeCom, Slack, Discord, or desktop notifications when you are needed. Everything else is one command away.
+- **One page for the whole picture.** Open the built-in page in a browser to see everything, launch a task, or answer a card (with a wall-mounted board on the side); cards still reach you on Feishu, DingTalk, WeCom, Slack, Discord, or desktop notifications when you are needed.
 
 ## Get started
 
@@ -255,6 +255,7 @@ For automated workloads, providers generally recommend using API keys rather tha
 | `skills/agent-autoloop/` | The hub's configuration and operation manual, also made available to agents during installation |
 | `docs/` | Protocol, plugin guide, and Chinese / English architecture diagrams |
 | `tests/`, `sim/` | Everyday behavior tests, simulation, enumeration, crash tests, and mutation checks |
+| `web/` | The owner's client: overview, launching tasks, answering cards, and the wall board; built assets are committed |
 | `scripts/`, `.github/workflows/` | Performance and real-agent checks, installation smoke scripts, and Windows / Linux / macOS CI |
 | Root documents and `install.sh` | Chinese / English READMEs, installation, security, development guidelines, license, and installer |
 

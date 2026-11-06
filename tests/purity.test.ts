@@ -56,8 +56,8 @@ test("nothing is installed to run it", () => {
   assert.deepEqual(manifest.dependencies ?? {}, {});
 });
 
-test("there's no interface in it", () => {
-  assert.ok(!existsSync(join(root, "web")));
+test("the interface lives in web/, and the kernel still serves none of it", () => {
+  assert.ok(existsSync(join(root, "web")), "the owner's web client lives in web/");
   for (const [file, text] of kernel) assert.ok(!/<script|cookie/i.test(text), file);
 });
 

@@ -24,11 +24,12 @@ while IFS= read -r file; do
   case "$file" in
     # tests/example-plugins.test.ts runs the commands in this tutorial.
     docs/plugins.md) kind=normal ;;
-    README.md | README.en.md | INSTALL.md | SECURITY.md | CONTRIBUTING.md | AGENTS.md | LICENSE) kind=docs ;;
+    README.md | README.en.md | INSTALL.md | SECURITY.md | CONTRIBUTING.md | AGENTS.md | LICENSE | .impeccable/* | PRODUCT.md) kind=docs ;;
     docs/* | .github/ISSUE_TEMPLATE/* | .github/pull_request_template.md) kind=docs ;;
     tests/simulation.test.ts | sim/enumerate.ts) kind=full ;;
     kernel/* | protocol/* | sim/random.ts | sim/world.ts | sim/invariants.ts) kind=kernel ;;
-    *) kind=normal ;;
+    plugins/* | examples/* | skills/* | worker/* | host/* | cli/* | bin/* | scripts/* | tests/* | web/* | install.sh) kind=normal ;;
+    *) kind=full ;;
   esac
   case "$kind" in
     full) scope=full ;;

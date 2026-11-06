@@ -8,7 +8,7 @@
 // option; a card link answers more than its card; a webhook with a bad signature is taken, or one without an adapter; a
 // webhook's secret leaks into anything it returns; the owner's key opens the worker's door; a page other than a card's exists;
 // a card's link still answers or shows the card after its week, or sends you to a command that doesn't work; a link opens
-// when no channel takes links.
+// when no channel takes links; the app's page loads a script it doesn't ship, or a path walks out of the app's directory.
 import assert from "node:assert/strict";
 import { createHmac } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -423,7 +423,13 @@ test("someone else's webhook goes through its source's adapter: signed, or not t
   assert.equal((await call("/v1/in/nowhere", { raw: items })).status, 404);
 });
 
-test("there's no other page: what's going on is read through the doors", async () => {
-  for (const path of ["/", "/index.html", "/app.js", "/style.css", "/../package.json"])
+test("the app is one page at /, loading only its own files; every other path is refused", async () => {
+  const page = await call("/");
+  assert.equal(page.status, 200);
+  assert.match(page.headers.get("content-type")!, /^text\/html/);
+  const policy = page.headers.get("content-security-policy")!;
+  assert.match(policy, /default-src 'none'/);
+  assert.match(policy, /script-src 'self'/, "the page runs only what the hub serves beside it");
+  for (const path of ["/index.html", "/app.js", "/style.css", "/../package.json", "/assets/nope.js", "/board"])
     assert.equal((await call(path)).status, 404, path);
 });

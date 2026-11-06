@@ -1,0 +1,707 @@
+/* The Emission-line Rail: a charcoal continuum crossed by needle lines. State lives in line form, identity in wavelength;
+   589nm sodium is reserved for the one thing waiting on you. Everything else is bone on charcoal, one size, ranked by ink. */
+
+::selection {
+  background: var(--ink);
+  color: var(--g0);
+}
+
+:root {
+  --g0: #191b1c;
+  --g1: #1e2122;
+  --g2: #26292a;
+  --g3: #2e3132;
+  --ink: #e7e2d4;
+  --ink-mid: #a6a193;
+  --ink-faint: #928d7f;
+  --hair: #3a3d3e;
+  --sodium: #f2d30b;
+  --wl-0: #9d7bff;
+  --wl-1: #5b8cff;
+  --wl-2: #3fc1ff;
+  --wl-3: #43cf8e;
+  --wl-4: #ff8a3d;
+  --wl-5: #ff5d5d;
+  --stem-w: 2px;
+  --rail-h: 132px;
+  --data: 14px;
+  --spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font:
+    var(--data)/1.55 system-ui,
+    "Microsoft YaHei",
+    sans-serif;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  background:
+    radial-gradient(130% 70% at 50% 115%, #212425 0%, rgba(33, 36, 37, 0) 55%),
+    repeating-linear-gradient(180deg, #1b1d1e 0px, #1f2122 3px, #1b1d1e 6px), var(--g0);
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.shell {
+  flex: 1;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 18px clamp(16px, 4vw, 52px) 14px;
+  min-height: 100dvh;
+}
+
+/* One instrument bar: the name at far left, the facts at far right, all at the same small size. */
+.bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.bar .name {
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  color: var(--ink-mid);
+  text-transform: uppercase;
+}
+
+.bar .facts {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--ink-mid);
+}
+
+.bar .facts b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ink-mid);
+  margin-right: 6px;
+  vertical-align: 1px;
+}
+
+.dot.on {
+  background: var(--ink);
+}
+
+.dot.off {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--ink-faint);
+}
+
+/* The stage: the plate blooms in the free space, the rail sits low and off-centre. */
+.stage {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  min-height: 0;
+  min-width: 0;
+}
+
+.plate-zone {
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 8px 0 26px;
+}
+
+/* ---------- the rail ---------- */
+
+.rail-wrap {
+  position: relative;
+  margin: 0 -4px 8px;
+  min-width: 0;
+}
+
+.rail {
+  /* History keeps going to the left; the fade says so on the strip that scrolls, never on the datum below it. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 28px);
+  mask-image: linear-gradient(90deg, transparent 0, #000 28px);
+}
+
+.rail {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  height: calc(var(--rail-h) + 44px);
+  padding: 0 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  position: relative;
+}
+
+.rail::before {
+  content: "";
+  position: sticky;
+  left: 0;
+  display: block;
+  flex: 1 0 24px;
+}
+
+.rail::after {
+  content: "";
+  position: sticky;
+  right: 0;
+  display: block;
+  flex: 1 0 24px;
+}
+
+.rail-line {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0 10px 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+  position: relative;
+  flex: 0 0 auto;
+  font: inherit;
+  color: inherit;
+}
+
+/* The stem stays a hairline; the finger does not. */
+.rail-line::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -8px;
+  bottom: -4px;
+  width: 44px;
+}
+
+.rail-line:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.stem-slot {
+  height: var(--rail-h);
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.stem {
+  width: var(--stem-w);
+  background: var(--wl, var(--ink-mid));
+  transform-origin: bottom;
+  transition:
+    height 0.5s var(--spring),
+    opacity 0.4s ease,
+    background-color 0.4s ease;
+}
+
+.stem.live {
+  height: var(--rail-h);
+}
+
+.stem.queued {
+  height: calc(var(--rail-h) * 0.42);
+  opacity: 0.55;
+}
+
+.stem.dashed {
+  height: var(--rail-h);
+  background: repeating-linear-gradient(180deg, var(--wl, var(--ink-mid)) 0 7px, transparent 7px 12px);
+}
+
+.stem.stub {
+  height: 18px;
+  opacity: 0.3;
+}
+
+.stem.struck {
+  height: 18px;
+  opacity: 0.45;
+  position: relative;
+}
+
+.stem.struck::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  top: 8px;
+  height: 1px;
+  background: var(--ink-faint);
+}
+
+.stem.waiting {
+  height: var(--rail-h);
+  background: var(--sodium);
+  box-shadow: 0 0 0 0.5px rgba(242, 211, 11, 0.35);
+}
+
+.stem.notice {
+  height: calc(var(--rail-h) * 0.75);
+  background: repeating-linear-gradient(180deg, var(--sodium) 0 7px, transparent 7px 12px);
+}
+
+.stem.land {
+  animation: land 0.6s var(--spring);
+}
+
+@keyframes land {
+  0% {
+    transform: scaleY(0.02);
+  }
+  62% {
+    transform: scaleY(1.045);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.rail-tag {
+  margin-top: 10px;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.rail-line.selected .rail-tag {
+  color: var(--ink);
+}
+
+/* The baseline the lines stand on, and the sodium's pointer up to its plate. */
+.baseline {
+  height: 1px;
+  background: var(--hair);
+  margin: 0 2px;
+}
+
+/* ---------- the plate ---------- */
+
+.plate {
+  width: min(720px, 100%);
+  max-width: 100%;
+  background: var(--g2);
+  border: 1px solid var(--hair);
+  border-radius: 4px;
+  padding: 22px 26px 24px;
+  position: relative;
+}
+
+.plate::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: var(--pointer, 50%);
+  width: var(--stem-w);
+  height: 14px;
+  transform: translateX(-50%);
+  background: var(--pointer-color, var(--hair));
+}
+
+.plate .head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.plate .num {
+  font-size: 21px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
+.plate .sub {
+  font-size: 14px;
+  color: var(--ink-mid);
+  letter-spacing: 0.03em;
+}
+
+.plate .body {
+  color: var(--ink);
+  margin: 10px 0 4px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.plate .meta {
+  font-size: 14px;
+  /* The plate sits on raised ground; the faintest ink would drop under 4.5:1 there. */
+  color: var(--ink-mid);
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 8px 0 2px;
+}
+
+.plate .meta b {
+  color: var(--ink-mid);
+  font-weight: 600;
+}
+
+.plate .options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.plate .other {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+button.act {
+  font: inherit;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 4px;
+  border: 1px solid var(--ink-mid);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+button.act:hover {
+  border-color: var(--ink);
+}
+
+button.act.best {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #16181a;
+  font-weight: 600;
+}
+
+button.act:focus-visible,
+input.word:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* An alarm is loud ink, never the sodium family: 589nm only ever means "this waits on you". */
+.mistake {
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+button.act.busy {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+button.act.quiet {
+  min-height: 34px;
+  border-color: var(--hair);
+  color: var(--ink-mid);
+}
+
+input.word {
+  font: inherit;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 4px;
+  border: 1px solid var(--hair);
+  background: var(--g1);
+  color: var(--ink);
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+input.word:focus {
+  outline: none;
+  border-color: var(--ink-mid);
+}
+
+input.word::placeholder {
+  color: var(--ink-faint);
+}
+
+/* The run's own timeline, told from the log. */
+.tline {
+  scrollbar-width: thin;
+  scrollbar-color: var(--hair) transparent;
+  margin: 14px 0 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--hair);
+  font-size: 14px;
+  color: var(--ink-mid);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.tline .t {
+  color: var(--ink-mid);
+}
+
+/* ---------- launch ---------- */
+
+.launch {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  min-width: 0;
+}
+
+.launch input.word[type="text"] {
+  flex: 0 1 auto;
+}
+
+.launch .type {
+  flex: 0 1 220px;
+}
+
+.launch .sum {
+  flex: 1 1 240px;
+}
+
+.launch .note {
+  flex-basis: 100%;
+  font-size: 14px;
+  color: var(--ink-mid);
+  min-height: 18px;
+}
+
+.launch .note.err {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---------- legend ---------- */
+
+.legend {
+  display: flex;
+  align-items: baseline;
+  gap: 22px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--ink-faint);
+  padding-top: 12px;
+  border-top: 1px solid var(--hair);
+  margin-top: 14px;
+}
+
+/* The usage item carries its own leading separator: where it wraps, the pipe wraps with it. */
+.legend .usage::before {
+  content: "|";
+  margin-right: 22px;
+  color: var(--hair);
+}
+
+.legend .key {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.legend .tick {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--ink-mid);
+}
+
+.legend .swatch {
+  width: var(--stem-w);
+  height: 12px;
+  display: inline-block;
+  transform: translateY(1px);
+}
+
+.legend .gap {
+  color: var(--hair);
+}
+
+/* ---------- login ---------- */
+
+.gate {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  padding: 24px;
+  text-align: center;
+}
+
+.gate .doublet {
+  display: flex;
+  gap: 5px;
+  height: 72px;
+  align-items: flex-end;
+}
+
+.gate .doublet i {
+  width: var(--stem-w);
+  height: 72px;
+  background: var(--sodium);
+  display: block;
+}
+
+.gate .word {
+  width: min(420px, 86vw);
+  text-align: center;
+}
+
+.gate .hint {
+  font-size: 14px;
+  color: var(--ink-faint);
+  max-width: 460px;
+}
+
+.gate .err {
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 600;
+  min-height: 18px;
+}
+
+.gate .doublet.dashed i {
+  background: repeating-linear-gradient(180deg, var(--sodium) 0 7px, transparent 7px 12px);
+}
+
+/* ---------- board (#/board) ---------- */
+
+.board {
+  --stem-w: 3px;
+  --rail-h: 44vh;
+  font-size: 19px;
+}
+
+.board .rail-tag {
+  font-size: 15px;
+}
+
+.board .legend {
+  font-size: 15px;
+}
+
+.board .stem.waiting {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ---------- states of the whole surface ---------- */
+
+.lost .stage,
+.lost .legend {
+  opacity: 0.45;
+}
+
+.banner {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.empty-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--rail-h) + 78px);
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink-faint);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --rail-h: 108px;
+  }
+  .plate {
+    padding: 18px 16px 20px;
+  }
+  .launch input.word {
+    flex: 1 1 100%;
+  }
+  .plate-zone {
+    align-items: start;
+  }
+  .legend {
+    gap: 14px;
+  }
+  /* The first glance holds who is online; money reads a line later, without its separator. */
+  .legend .usage {
+    order: 10;
+  }
+  .legend .usage::before {
+    content: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stem,
+  .stem.land,
+  .board .stem.waiting {
+    animation: none;
+    transition: none;
+  }
+}

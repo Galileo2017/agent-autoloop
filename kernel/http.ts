@@ -154,6 +154,17 @@ function askAsTask(call: Call, worker: string, input: Record<string, any>) {
   return json(act(call, "ask", taskOf(call, worker, input.task).name, input.ask));
 }
 
+/** The owner starting work by hand: an event of their own, never in another source's name, and never a continuation of a
+ * processing chain — so it carries no hops, and `ingest` records it under the reserved source "owner". */
+async function ownerEmit(call: Call) {
+  requireKey(call, "owner");
+  const given = await readJson(call.request);
+  if (given && typeof given === "object" && !Array.isArray(given) && "hops" in given) {
+    throw new InputError("emit 不带层数：自己发的事件是这条链的第一环");
+  }
+  return json(act(call, "ingest", "owner", given));
+}
+
 async function work(call: Call) {
   const { services, request, url, token } = call;
   const worker = requireKey(call, "worker");
@@ -272,6 +283,7 @@ async function route(call: Call): Promise<Response> {
   if (method === "POST" && path === "/v1/events") {
     return json(act(call, "ingest", requireKey(call, "source"), await readJson(request)));
   }
+  if (method === "POST" && path === "/v1/emit") return ownerEmit(call);
   if (method === "POST" && path === "/v1/tell") return tell(call);
   if (method === "GET" && path === "/v1/work") return work(call);
   const [, runPart, action] = /^\/v1\/runs\/([1-9][0-9]*)\/(started|result|cancel|why)$/.exec(path) ?? [];

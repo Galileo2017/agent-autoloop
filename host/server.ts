@@ -4,6 +4,7 @@ import { watch } from "node:fs";
 import { basename, dirname } from "node:path";
 import { RULES_FILE } from "./home.ts";
 import { loadPlugin } from "./plugins.ts";
+import { pages } from "./pages.ts";
 import * as hub from "./runtime.ts";
 import { AuthError, NotFound } from "../kernel/errors.ts";
 import { createHandler } from "../kernel/http.ts";
@@ -107,34 +108,36 @@ export function makeHandler(commit = "dev") {
   const watcher = watch(dirname(RULES_FILE), (_event, file) => {
     if (file === basename(RULES_FILE)) fire();
   });
-  const handle = createHandler({
-    commit,
-    now: Date.now,
-    view: hub.getView,
-    environment: hub.environment,
-    dispatch: hub.execute,
-    state: hub.stateOf,
-    why: hub.why,
-    card: hub.cardByToken,
-    wait(until, signal) {
-      return new Promise((resolve) => {
-        const waiter = {
-          until,
-          done() {
-            waiting.delete(waiter);
-            signal.removeEventListener("abort", waiter.done);
-            resolve();
-          },
-        };
-        waiting.add(waiter);
-        signal.addEventListener("abort", waiter.done, { once: true });
-        if (signal.aborted) waiter.done();
-        arm();
-      });
-    },
-    stream: logStream,
-    adapt: adaptWebhook,
-  });
+  const handle = pages(
+    createHandler({
+      commit,
+      now: Date.now,
+      view: hub.getView,
+      environment: hub.environment,
+      dispatch: hub.execute,
+      state: hub.stateOf,
+      why: hub.why,
+      card: hub.cardByToken,
+      wait(until, signal) {
+        return new Promise((resolve) => {
+          const waiter = {
+            until,
+            done() {
+              waiting.delete(waiter);
+              signal.removeEventListener("abort", waiter.done);
+              resolve();
+            },
+          };
+          waiting.add(waiter);
+          signal.addEventListener("abort", waiter.done, { once: true });
+          if (signal.aborted) waiter.done();
+          arm();
+        });
+      },
+      stream: logStream,
+      adapt: adaptWebhook,
+    }),
+  );
   fire();
   return {
     handle,

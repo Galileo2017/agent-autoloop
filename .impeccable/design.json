@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-06",
+  "title": "Design System: Agent Autoloop",
+  "extensions": {
+    "colorMeta": {
+      "charcoal-base": {
+        "role": "neutral",
+        "displayName": "炭底 Charcoal Base",
+        "canonical": "#191b1c",
+        "tonalRamp": ["#0a0b0c", "#232526", "#404243", "#5f6263", "#808384", "#a3a5a7", "#c7cacb", "#eceff0"]
+      },
+      "charcoal-input": {
+        "role": "neutral",
+        "displayName": "炭井 Charcoal Input",
+        "canonical": "#1e2122",
+        "tonalRamp": ["#090c0d", "#232627", "#3f4344", "#5e6263", "#7f8384", "#a2a6a7", "#c6cacb", "#ebeff1"]
+      },
+      "charcoal-plate": {
+        "role": "neutral",
+        "displayName": "炭版 Charcoal Plate",
+        "canonical": "#26292a",
+        "tonalRamp": ["#090c0c", "#232627", "#3f4344", "#5e6263", "#7f8384", "#a2a6a7", "#c6cacb", "#ebeff1"]
+      },
+      "carbon": {
+        "role": "neutral",
+        "displayName": "炭黑 Carbon",
+        "canonical": "#16181a",
+        "tonalRamp": ["#0a0b0d", "#232527", "#404245", "#5f6164", "#808385", "#a3a5a8", "#c7c9cc", "#eceff2"]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "发丝灰 Hairline",
+        "canonical": "#3a3d3e",
+        "tonalRamp": ["#090c0c", "#232626", "#3f4344", "#5f6263", "#7f8384", "#a2a6a7", "#c6cacb", "#ebeff0"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "骨白 Ink",
+        "canonical": "#e7e2d4",
+        "tonalRamp": ["#0e0b03", "#29251a", "#464236", "#656155", "#878275", "#aaa598", "#cec9bb", "#f3eee0"]
+      },
+      "ink-mid": {
+        "role": "neutral",
+        "displayName": "中墨 Ink Mid",
+        "canonical": "#a6a193",
+        "tonalRamp": ["#0e0b03", "#292519", "#464236", "#666154", "#878275", "#aaa597", "#cec9ba", "#f4eedf"]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "淡墨 Ink Faint",
+        "canonical": "#928d7f",
+        "tonalRamp": ["#0f0b03", "#292519", "#464235", "#666154", "#878274", "#aaa596", "#cec9ba", "#f4eedf"]
+      },
+      "sodium": {
+        "role": "primary",
+        "displayName": "钠黄 Sodium 589nm",
+        "canonical": "#f2d30b",
+        "tonalRamp": ["#0e0b00", "#2b2504", "#4d4203", "#6f6113", "#95821c", "#bda518", "#e5c931", "#fff0a6"]
+      },
+      "wavelength-violet": {
+        "role": "secondary",
+        "displayName": "波长·紫 Violet",
+        "canonical": "#9d7bff",
+        "tonalRamp": ["#0e0129", "#2b0660", "#4b189a", "#6941c0", "#8965e7", "#a991fc", "#cac0fa", "#eeecff"]
+      },
+      "wavelength-blue": {
+        "role": "secondary",
+        "displayName": "波长·蓝 Blue",
+        "canonical": "#5b8cff",
+        "tonalRamp": ["#000232", "#020379", "#0f329f", "#2c57c5", "#4b7bec", "#7ca3f7", "#b0c9fc", "#e7effe"]
+      },
+      "wavelength-cyan": {
+        "role": "secondary",
+        "displayName": "波长·青 Cyan",
+        "canonical": "#3fc1ff",
+        "tonalRamp": ["#010d15", "#01293b", "#094864", "#026a92", "#018dc2", "#29b2ef", "#8bd4fc", "#def2fe"]
+      },
+      "wavelength-green": {
+        "role": "secondary",
+        "displayName": "波长·绿 Green",
+        "canonical": "#43cf8e",
+        "tonalRamp": ["#000f06", "#022d1a", "#0c4f32", "#077449", "#0c9a63", "#30c181", "#5fe7a4", "#c5fedd"]
+      },
+      "wavelength-orange": {
+        "role": "secondary",
+        "displayName": "波长·橙 Orange",
+        "canonical": "#ff8a3d",
+        "tonalRamp": ["#170600", "#3d1a03", "#6a2f01", "#964910", "#c76218", "#f58132", "#feb78f", "#ffeade"]
+      },
+      "wavelength-red": {
+        "role": "secondary",
+        "displayName": "波长·红 Red",
+        "canonical": "#ff5d5d",
+        "tonalRamp": ["#1d0102", "#4c0108", "#7d0c18", "#b70422", "#e03f44", "#f97773", "#fcb4ae", "#fee9e7"]
+      }
+    },
+    "typographyMeta": {
+      "data": {
+        "displayName": "Data 正文",
+        "purpose": "全站唯一数据字号 14px/1.55；数字 tabular-nums；层级靠三种墨色与字重，不靠字号。"
+      },
+      "plate-number": {
+        "displayName": "Plate 编号",
+        "purpose": "编号即标题——唯一的标准字号抬升（21px/650/0.02em），只出现在决策图版头顶。"
+      },
+      "board-data": { "displayName": "Board 场景档", "purpose": "大屏 #/board 远读档 19px；其轨标签与图例降回 15px。" },
+      "label": {
+        "displayName": "Label 仪器条名称",
+        "purpose": "14px/0.16em 大写字距名称（AGENT AUTOLOOP）；进门页有 12px 内联同款。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "sodium-halo",
+        "value": "0 0 0 0.5px rgba(242,211,11,0.35)",
+        "purpose": "等待茎线的钠色轮廓增亮——全站唯一外发光记号，仅限 .stem.waiting。"
+      },
+      {
+        "name": "presence-ring",
+        "value": "inset 0 0 0 1px var(--ink-faint)",
+        "purpose": "离线状态点的空心环，表示该接单程序/通道不在线。"
+      }
+    ],
+    "motion": [
+      {
+        "name": "spring",
+        "value": "cubic-bezier(0.34, 1.4, 0.64, 1)",
+        "purpose": "茎线生长与落线的过冲弹性，全站唯一缓动曲线（--spring）。"
+      },
+      {
+        "name": "land",
+        "value": "scaleY(0.02) → 1.045 → 1, 0.6s var(--spring)",
+        "purpose": "新线落地绽放（@keyframes land）。"
+      },
+      {
+        "name": "breathe",
+        "value": "opacity 1 ↔ 0.5, 4s ease-in-out infinite",
+        "purpose": "大屏等待线的呼吸（仅 #/board 的 .stem.waiting）。"
+      },
+      {
+        "name": "stem-transition",
+        "value": "height 0.5s var(--spring); opacity/background-color 0.4s ease",
+        "purpose": "茎线状态切换。"
+      },
+      {
+        "name": "act-transition",
+        "value": "background-color/color/border-color 0.25s ease",
+        "purpose": "按钮 hover/状态过渡。"
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation: none; transition: none（全部茎线）",
+        "purpose": "prefers-reduced-motion 下关停 land/breathe/过渡。"
+      }
+    ],
+    "breakpoints": [{ "name": "mobile", "value": "max-width: 640px" }]
+  },
+  "components": [
+    {
+      "name": "Rail Line",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "签名组件：轨上一根发丝线，form 写在 CSS 类里——实线在跑、虚线不确定、半高排队、残桩过去、划断停止、钠黄双线等你。颜色由 wave.ts 的名字哈希决定。",
+      "html": "<button class=\"ds-rail-line\" aria-label=\"deploy.production #12 在跑\"><span class=\"ds-stem-slot\"><span class=\"ds-stem is-live\"></span></span><span class=\"ds-rail-tag\">#12</span></button>",
+      "css": ".ds-rail-line{appearance:none;background:none;border:0;padding:0 10px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;cursor:pointer;position:relative;font:inherit;color:inherit}.ds-rail-line::before{content:\"\";position:absolute;left:50%;transform:translateX(-50%);top:-8px;bottom:-4px;width:44px}.ds-rail-line:focus-visible{outline:1px solid var(--ink,#e7e2d4);outline-offset:4px}.ds-stem-slot{height:132px;display:flex;align-items:flex-end;gap:4px}.ds-stem{width:2px;background:var(--wl,var(--ink-mid,#a6a193));transform-origin:bottom}.ds-stem.is-live{height:132px}.ds-stem.is-queued{height:calc(132px*0.42);opacity:.55}.ds-stem.is-dashed{height:132px;background:repeating-linear-gradient(180deg,var(--wl,var(--ink-mid,#a6a193)) 0 7px,transparent 7px 12px)}.ds-stem.is-stub{height:18px;opacity:.3}.ds-stem.is-struck{height:18px;opacity:.45;position:relative}.ds-stem.is-struck::after{content:\"\";position:absolute;left:-5px;right:-5px;top:8px;height:1px;background:var(--ink-faint,#928d7f)}.ds-stem.is-waiting{height:132px;background:var(--sodium,#f2d30b);box-shadow:0 0 0 .5px rgba(242,211,11,.35)}.ds-stem.is-notice{height:calc(132px*.75);background:repeating-linear-gradient(180deg,var(--sodium,#f2d30b) 0 7px,transparent 7px 12px)}.ds-rail-tag{margin-top:10px;font-size:14px;letter-spacing:.04em;color:var(--ink-faint,#928d7f);white-space:nowrap}.ds-rail-line.is-selected .ds-rail-tag{color:var(--ink,#e7e2d4)}"
+    },
+    {
+      "name": "Decision Plate",
+      "kind": "card",
+      "refersTo": "plate",
+      "description": "决策图版：点轨上一根线，它在那根线正上方绽放；钠色指针钉住所选线，推荐项实墨填充。",
+      "html": "<div class=\"ds-plate\" style=\"--pointer:50%;--pointer-color:var(--sodium,#f2d30b)\"><div class=\"ds-plate-head\"><span class=\"ds-plate-num\">卡片 #7 · 等你决定</span><span class=\"ds-plate-sub\">deploy.production</span></div><div class=\"ds-plate-body\">要删除 3 个旧目录，确认吗？</div><div class=\"ds-plate-meta\"><span>Agent <b>claude-code</b></span><span>用量 <b>12,480 token · $0.31</b></span></div><div class=\"ds-plate-options\"><button class=\"ds-act ds-act-best\">确认删除</button><button class=\"ds-act\">先不动</button></div></div>",
+      "css": ".ds-plate{width:min(720px,100%);background:var(--g2,#26292a);border:1px solid var(--hair,#3a3d3e);border-radius:4px;padding:22px 26px 24px;position:relative;color:var(--ink,#e7e2d4);font-size:14px;line-height:1.55}.ds-plate::after{content:\"\";position:absolute;top:-1px;left:var(--pointer,50%);width:2px;height:14px;transform:translateX(-50%);background:var(--pointer-color,var(--hair,#3a3d3e))}.ds-plate-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:4px}.ds-plate-num{font-size:21px;font-weight:650;letter-spacing:.02em}.ds-plate-sub{font-size:14px;color:var(--ink-mid,#a6a193);letter-spacing:.03em}.ds-plate-body{margin:10px 0 4px;white-space:pre-wrap;overflow-wrap:anywhere}.ds-plate-meta{font-size:14px;color:var(--ink-mid,#a6a193);display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 2px}.ds-plate-meta b{font-weight:600}.ds-plate-options{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.ds-act{font:inherit;min-height:44px;padding:0 20px;border-radius:4px;border:1px solid var(--ink-mid,#a6a193);background:transparent;color:var(--ink,#e7e2d4);cursor:pointer;transition:background-color .25s ease,color .25s ease,border-color .25s ease}.ds-act:hover{border-color:var(--ink,#e7e2d4)}.ds-act:focus-visible{outline:1px solid var(--ink,#e7e2d4);outline-offset:2px}.ds-act-best{background:var(--ink,#e7e2d4);border-color:var(--ink,#e7e2d4);color:#16181a;font-weight:600}"
+    },
+    {
+      "name": "Act Button",
+      "kind": "button",
+      "refersTo": "button-act",
+      "description": "默认骨描按钮：透明底、中墨边，hover 边框升骨白；44px 触控。",
+      "html": "<button class=\"ds-act\">发送</button>",
+      "css": ".ds-act{font:inherit;min-height:44px;padding:0 20px;border-radius:4px;border:1px solid var(--ink-mid,#a6a193);background:transparent;color:var(--ink,#e7e2d4);cursor:pointer;transition:background-color .25s ease,color .25s ease,border-color .25s ease}.ds-act:hover{border-color:var(--ink,#e7e2d4)}.ds-act:focus-visible{outline:1px solid var(--ink,#e7e2d4);outline-offset:2px}.ds-act.is-busy{opacity:.5;pointer-events:none}"
+    },
+    {
+      "name": "Best Button",
+      "kind": "button",
+      "refersTo": "button-act-best",
+      "description": "实墨填充按钮：推荐选项与发射/进门，炭黑字 600。",
+      "html": "<button class=\"ds-act ds-act-best\">发射</button>",
+      "css": ".ds-act{font:inherit;min-height:44px;padding:0 20px;border-radius:4px;border:1px solid var(--ink-mid,#a6a193);background:transparent;color:var(--ink,#e7e2d4);cursor:pointer;transition:background-color .25s ease,color .25s ease,border-color .25s ease}.ds-act:hover{border-color:var(--ink,#e7e2d4)}.ds-act:focus-visible{outline:1px solid var(--ink,#e7e2d4);outline-offset:2px}.ds-act-best{background:var(--ink,#e7e2d4);border-color:var(--ink,#e7e2d4);color:#16181a;font-weight:600}"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "button-act-quiet",
+      "description": "图版内次级动作：34px 高、发丝灰边、中墨字。",
+      "html": "<button class=\"ds-act ds-act-quiet\">停这一轮</button>",
+      "css": ".ds-act{font:inherit;min-height:44px;padding:0 20px;border-radius:4px;border:1px solid var(--ink-mid,#a6a193);background:transparent;color:var(--ink,#e7e2d4);cursor:pointer;transition:background-color .25s ease,color .25s ease,border-color .25s ease}.ds-act:hover{border-color:var(--ink,#e7e2d4)}.ds-act:focus-visible{outline:1px solid var(--ink,#e7e2d4);outline-offset:2px}.ds-act-quiet{min-height:34px;border-color:var(--hair,#3a3d3e);color:var(--ink-mid,#a6a193)}"
+    },
+    {
+      "name": "Word Input",
+      "kind": "input",
+      "refersTo": "input-word",
+      "description": "全站唯一输入样式：炭井底、发丝灰边，focus 边框升中墨。",
+      "html": "<input class=\"ds-word\" placeholder=\"manual.要做什么\" aria-label=\"事件类型\" />",
+      "css": ".ds-word{font:inherit;min-height:44px;padding:0 14px;border-radius:4px;border:1px solid var(--hair,#3a3d3e);background:var(--g1,#1e2122);color:var(--ink,#e7e2d4);min-width:0;flex:1 1 200px}.ds-word:focus-visible{outline:1px solid var(--ink,#e7e2d4);outline-offset:2px}.ds-word:focus{outline:none;border-color:var(--ink-mid,#a6a193)}.ds-word::placeholder{color:var(--ink-faint,#928d7f)}"
+    },
+    {
+      "name": "Instrument Bar",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "仪器条：名称在左、事实在右，同一小字号；在线状态用 7px 圆点。",
+      "html": "<header class=\"ds-bar\"><span class=\"ds-bar-name\">Agent Autoloop</span><div class=\"ds-bar-facts\"><span><span class=\"ds-dot on\"></span>中台在线</span><span>今日 <b>$1.24</b> · 6 轮</span><span>7 天 <b>$8.90</b></span></div></header>",
+      "css": ".ds-bar{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--ink-mid,#a6a193)}.ds-bar-name{font-size:14px;letter-spacing:.16em;color:var(--ink-mid,#a6a193);text-transform:uppercase}.ds-bar-facts{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end;flex:1;min-width:0;letter-spacing:.02em}.ds-bar-facts b{color:var(--ink,#e7e2d4);font-weight:600}.ds-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ink-mid,#a6a193);margin-right:6px;vertical-align:1px}.ds-dot.on{background:var(--ink,#e7e2d4)}.ds-dot.off{background:transparent;box-shadow:inset 0 0 0 1px var(--ink-faint,#928d7f)}"
+    },
+    {
+      "name": "Legend",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "图例：规则波长色样（2px×12px）、没被接走的钠虚线样、在线圆点与用量，发丝灰竖线分隔。",
+      "html": "<footer class=\"ds-legend\"><div class=\"ds-legend-key\"><span class=\"ds-tick\"><span class=\"ds-swatch\" style=\"background:var(--wl-3,#43cf8e)\"></span>deploy.production</span><span class=\"ds-tick\"><span class=\"ds-swatch\" style=\"background:repeating-linear-gradient(90deg, var(--sodium,#f2d30b) 0 4px, transparent 4px 7px)\"></span>2 条事件没被接走</span><span class=\"ds-gap\">|</span><span class=\"ds-tick\"><span class=\"ds-dot off\"></span>worker</span><span>今日 <b>$1.24</b> · 84,210 token</span></div></footer>",
+      "css": ".ds-legend{display:flex;align-items:baseline;gap:22px;flex-wrap:wrap;font-size:14px;color:var(--ink-faint,#928d7f);padding-top:12px;border-top:1px solid var(--hair,#3a3d3e)}.ds-legend-key{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}.ds-tick{display:inline-flex;align-items:baseline;gap:6px;color:var(--ink-mid,#a6a193)}.ds-tick b{font-weight:600}.ds-swatch{width:2px;height:12px;display:inline-block;transform:translateY(1px)}.ds-gap{color:var(--hair,#3a3d3e)}.ds-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ink-mid,#a6a193);margin-right:6px;vertical-align:1px}.ds-dot.on{background:var(--ink,#e7e2d4)}.ds-dot.off{background:transparent;box-shadow:inset 0 0 0 1px var(--ink-faint,#928d7f)}"
+    },
+    {
+      "name": "Gate",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "进门：钠黄双线（钥匙错了整组转虚线）+ 居中密钥输入 + 实墨按钮；双线是等待的待机态。",
+      "html": "<div class=\"ds-gate\"><div class=\"ds-gate-name\">AGENT AUTOLOOP</div><div class=\"ds-doublet\"><i></i><i></i></div><input class=\"ds-word ds-gate-word\" type=\"password\" placeholder=\"本人的密钥\" aria-label=\"本人的密钥\" /><button class=\"ds-act ds-act-best\">进门</button><div class=\"ds-gate-err\">钥匙不对，或中台没连上。</div></div>",
+      "css": ".ds-gate{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:24px;text-align:center;font:14px/1.55 system-ui,'Microsoft YaHei',sans-serif;color:var(--ink,#e7e2d4)}.ds-gate-name{font-size:12px;letter-spacing:.16em;color:var(--ink-mid,#a6a193)}.ds-doublet{display:flex;gap:5px;height:72px;align-items:flex-end}.ds-doublet i{width:2px;height:72px;background:var(--sodium,#f2d30b);display:block}.ds-doublet.is-dashed i{background:repeating-linear-gradient(180deg,var(--sodium,#f2d30b) 0 7px,transparent 7px 12px)}.ds-word{font:inherit;min-height:44px;padding:0 14px;border-radius:4px;border:1px solid var(--hair,#3a3d3e);background:var(--g1,#1e2122);color:var(--ink,#e7e2d4)}.ds-word:focus{outline:none;border-color:var(--ink-mid,#a6a193)}.ds-word::placeholder{color:var(--ink-faint,#928d7f)}.ds-gate-word{width:min(420px,86vw);text-align:center}.ds-act{font:inherit;min-height:44px;padding:0 20px;border-radius:4px;border:1px solid var(--ink-mid,#a6a193);background:transparent;color:var(--ink,#e7e2d4);cursor:pointer;transition:background-color .25s ease,color .25s ease,border-color .25s ease}.ds-act:hover{border-color:var(--ink,#e7e2d4)}.ds-act:focus-visible{outline:1px solid var(--ink,#e7e2d4);outline-offset:2px}.ds-act-best{background:var(--ink,#e7e2d4);border-color:var(--ink,#e7e2d4);color:#16181a;font-weight:600}.ds-gate-err{font-size:14px;color:var(--ink,#e7e2d4);font-weight:600;min-height:18px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "发射线谱栏（The Emission-line Rail）",
+    "overview": "这个界面把中台画成一台光谱仪。底是一张程序化条带织出的炭灰连续谱——body 背景由 3px 重复条带加底部径向微光叠在炭底上构成；每件事物——一轮任务、一张卡片——是谱上竖着的一根发丝线（2px 茎线）。状态不靠图标、徽章或角标，全部写在线形里：实线在跑、虚线不确定、半高在排队、残桩已成过去、划断已停；加倍钠黄双线是唯一正在等你的事。点其中一根线，决策图版在那根线的正上方绽放，拍板完线就接成实线；无事时，从底部一行发射控件里发一根新线。文字世界只有一个数据字号 14px，层级由三种墨色和字重承担，数字等宽。色彩只作为谱线存在：规则身份映射六个固定波长，589nm 钠黄专属等待，其余一切是墨色系。没有侧边栏、没有卡片网格、没有图表库、没有外部字体。",
+    "keyCharacteristics": [
+      "状态即线形：七种茎线形（live/queued/dashed/stub/struck/waiting/notice，rail.ts 的 MarkForm 是唯一枚举来源）加 land、breathe 两个动效",
+      "颜色只作为谱线：六个波长 + 钠黄，正文、按钮、输入框、边框全是墨色系",
+      "单一数据字号 14px；编号 21px 即标题；大屏 19px 场景档",
+      "平面深度：炭色三阶 + 1px 发丝线，无投影",
+      "44px 触控目标、focus-visible 1px 实墨描边、tabular-nums 数字",
+      "单一 640px 断点；大屏是独立路由场景，不是响应式变体"
+    ],
+    "rules": [
+      {
+        "name": "The 589nm Rule",
+        "body": "钠黄只表达“这件事在等你”。错误与告警用实墨加粗（.mistake / .banner / .note.err / .gate .err 一律 color: var(--ink) + font-weight: 600）；world.css 在 .mistake 处明文注释了这条禁令：An alarm is loud ink, never the sodium family.",
+        "section": "colors"
+      },
+      {
+        "name": "The 波长即身份 Rule",
+        "body": "规则颜色不手挑、不按语义上色：wave.ts 把规则名做 31 乘子哈希（种子 7）对 6 取模，同名规则永远烧同一波长，跨总览、大屏、图例一致可读。红（wl-5）不表示错误，只表示某条规则的身份。",
+        "section": "colors"
+      },
+      {
+        "name": "The 单一数据字号 Rule",
+        "body": "新界面的一切常规文字都是 14px；层级用三种墨色和字重（400/600/650）表达，不新增字号。已落地的例外只有三个：图版编号 21px、大屏 19px（其标签/图例 15px）、进门名称 12px。",
+        "section": "typography"
+      },
+      {
+        "name": "The 无影 Rule",
+        "body": "深度 = 炭色三阶 + 1px 发丝线。不给面板、图版、控件加投影；钠晕与离线环两个记号之外没有先例。",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do 把运行状态写进线形：实线在跑、虚线不确定、半高排队、残桩过去、划断停止、钠黄双线等你——新状态先扩 MarkForm，别发明第五种表达。",
+      "Do 用 wave.ts 的名字哈希给新规则配色——同名永远同波长，跨页面一致。",
+      "Do 错误一律实墨加粗（color: var(--ink) + font-weight: 600）；触控目标保持 44px；focus-visible 用 1px 实墨描边。",
+      "Do 数字一律 tabular-nums，金额/用量/编号用 b 提到骨白 600。",
+      "Do 新场景复用同一个壳（仪器条/舞台/图例 + 轨），只换档位（如大屏 44vh / 3px / 19px），不另起布局。",
+      "Do 反馈靠墨色升级：hover 边框中墨→骨白、选中标签淡墨→骨白、进行中 busy 半透明。"
+    ],
+    "donts": [
+      "Don't 给等待以外的任何东西用钠黄——尤其不要拿它当错误色或强调色。",
+      "Don't 新增字号：常规文字 14px，层级靠三种墨色与字重；编号抬升只属于图版（21px），场景档只属于大屏（19px）。",
+      "Don't 加 box-shadow 投影、图标/emoji/徽章、超过 4px 的圆角或药丸形、侧边栏、卡片网格、图表库。",
+      "Don't 让彩色出现在谱线之外——正文、按钮、输入框、边框全是墨色系；波长只上茎线、色样和图版指针。",
+      "Don't 按语义手挑规则颜色（红=错误之类的映射不成立：wl-5 红只表示某条规则的身份）。"
+    ]
+  }
+}

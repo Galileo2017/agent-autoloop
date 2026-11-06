@@ -127,6 +127,8 @@ export function stateOf(now: number, before: number | undefined, rules: Rules, {
   return {
     now: iso(now),
     timezone: rules.timezone,
+    // Where the log stands right now: the owner's own clients continue a /v1/stream from here instead of replaying it all.
+    seq: all<{ seq: number }>("SELECT COALESCE(MAX(seq), 0) AS seq FROM facts")[0]!.seq,
     spending: spendingOf(all, now, rules.timezone),
     totals: { ...tally(counts), attention: openCards.length },
     cards: openCards.map((card) => view(card)),
