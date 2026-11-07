@@ -4,6 +4,7 @@ import { computed, defineComponent, nextTick, reactive, ref, watch } from "vue";
 import { answerCard, cancelRun, emitEvent, fetchWhy, type CardView, type RunView } from "./hub";
 import { connected, loadError, refresh, state } from "./session";
 import { marksOf, type Mark } from "./rail";
+import { autoSubject, LaunchHelp } from "./launch-help";
 import { timelineOf } from "./why";
 
 const marks = computed(() => (state.value ? marksOf(state.value) : []));
@@ -123,33 +124,49 @@ const stop = async (run: RunView) => {
 
 /* ---------- launch ---------- */
 
-const type = ref("");
-const subject = ref("");
+// Types the person can pick: the manual door plus whatever the owner's own rules listen for.
+// A wildcard pattern like manual.* becomes a concrete default (manual.task) — the protocol
+// refuses "*" in a type, and the drop-down hands out real types only.
+const typeOptions = computed(() => {
+  const list = new Set<string>(["manual.task"]);
+  for (const line of state.value?.lines ?? [])
+    if (line.source === "owner")
+      for (const one of line.types) list.add(one.includes("*") ? one.replace(/\*$/, "task") : one);
+  return [...list];
+});
+const typeChoice = ref<string>("manual.task");
+const customType = ref("");
+const effectiveType = computed(() => (typeChoice.value === "__custom__" ? customType.value.trim() : typeChoice.value));
+const subject = ref(autoSubject());
 const summary = ref("");
 const note = ref("");
 const noteBad = ref(false);
-const suggestions = computed(() => {
-  const seen = new Set<string>();
-  for (const line of state.value?.lines ?? []) for (const one of line.types) seen.add(one);
-  return [...seen];
-});
+const showHelp = ref(false);
+const chatLaunch = (chatType: string, chatSubject: string, chatSummary: string) => {
+  typeChoice.value = typeOptions.value.includes(chatType) ? chatType : "__custom__";
+  if (typeChoice.value === "__custom__") customType.value = chatType;
+  subject.value = chatSubject;
+  summary.value = chatSummary;
+  void launch();
+};
 const launch = async () => {
-  if (!type.value.trim() || busy.value) return;
+  if (!effectiveType.value || busy.value) return;
   busy.value = true;
   noteBad.value = false;
   try {
     const answer = await emitEvent({
       id: crypto.randomUUID?.() ?? `web-${Date.now()}-${Math.floor(Math.random() * 1e6)}`,
-      type: type.value.trim(),
+      type: effectiveType.value,
       ...(subject.value.trim() && { subject: subject.value.trim() }),
       ...(summary.value.trim() && { summary: summary.value.trim() }),
     });
     note.value = answer.routed.length
       ? `交给了：${answer.routed.join("、")}`
-      : "记下了，还没有规则接它。把 owner 登记进 rules.json 的 sources，再写一条 when.source 为 owner 的规则，web 就能点火这类任务。";
+      : "记下了，还没有规则接它。owner 来源只接 when.source 为 owner 的规则；类型从下拉框里选就一定有规则接。";
     noteBad.value = !answer.routed.length;
-    type.value = "";
-    subject.value = "";
+    typeChoice.value = typeOptions.value[0] ?? "manual.task";
+    customType.value = "";
+    subject.value = autoSubject();
     summary.value = "";
     await refresh();
   } catch (error) {
@@ -347,8 +364,11 @@ export const Overview = defineComponent({
                   )}
                 </div>
               )}
+              {showHelp.value && <LaunchHelp options={typeOptions.value} onLaunch={chatLaunch} />}
             </div>
-            {all && marks.value.length === 0 && <div class="empty-hint">还没有轮次。发射一根线，或等下一个定时。</div>}
+            {all && marks.value.length === 0 && !showHelp.value && (
+              <div class="empty-hint">还没有轮次。发射一根线，或点「怎么填？」让指导带你走一遍。</div>
+            )}
             <div class="rail-wrap">
               <div class="rail" ref={railEl}>
                 {marks.value.map((mark) => (
@@ -377,23 +397,30 @@ export const Overview = defineComponent({
               <div class="baseline" />
             </div>
             <div class="launch">
-              <input
+              <select
                 class="word type"
-                list="launch-types"
-                placeholder="manual.要做什么"
+                value={typeChoice.value}
                 aria-label="事件类型"
-                value={type.value}
-                onInput={(event) => (type.value = (event.target as HTMLInputElement).value)}
-                onKeydown={(event) => event.key === "Enter" && launch()}
-              />
-              <datalist id="launch-types">
-                {suggestions.value.map((one) => (
-                  <option value={one} />
+                onChange={(event) => (typeChoice.value = (event.target as HTMLSelectElement).value)}
+              >
+                {typeOptions.value.map((one) => (
+                  <option value={one}>{one}</option>
                 ))}
-              </datalist>
+                <option value="__custom__">自定义…</option>
+              </select>
+              {typeChoice.value === "__custom__" && (
+                <input
+                  class="word type"
+                  placeholder="manual.你的类型"
+                  aria-label="自定义事件类型"
+                  value={customType.value}
+                  onInput={(event) => (customType.value = (event.target as HTMLInputElement).value)}
+                  onKeydown={(event) => event.key === "Enter" && launch()}
+                />
+              )}
               <input
                 class="word"
-                style={{ flex: "0 1 160px" }}
+                style={{ flex: "0 1 170px" }}
                 placeholder="对象 #编号"
                 aria-label="对象"
                 value={subject.value}
@@ -402,12 +429,18 @@ export const Overview = defineComponent({
               />
               <input
                 class="word sum"
-                placeholder="一句话说明"
+                placeholder="要让 Agent 做什么？一句话说清"
                 aria-label="一句话说明"
                 value={summary.value}
                 onInput={(event) => (summary.value = (event.target as HTMLInputElement).value)}
                 onKeydown={(event) => event.key === "Enter" && launch()}
               />
+              <button
+                class={["act", "quiet", showHelp.value && "best-quiet"]}
+                onClick={() => (showHelp.value = !showHelp.value)}
+              >
+                {showHelp.value ? "收起指导" : "怎么填？"}
+              </button>
               <button class={["act", "best", busy.value && "busy"]} onClick={launch}>
                 发射
               </button>

@@ -7,6 +7,7 @@
 }
 
 :root {
+  color-scheme: dark;
   --g0: #191b1c;
   --g1: #1e2122;
   --g2: #26292a;
@@ -438,6 +439,49 @@ button.act.quiet {
   min-height: 34px;
   border-color: var(--hair);
   color: var(--ink-mid);
+}
+
+/* The guided chat: same instrument, one bubble per turn. */
+.chat-plate .chat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0 4px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.chat .line {
+  max-width: 88%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.chat .line.bot {
+  align-self: flex-start;
+  background: var(--g1);
+  border: 1px solid var(--hair);
+}
+
+.chat .line.me {
+  align-self: flex-end;
+  background: transparent;
+  border: 1px solid var(--hair);
+  color: var(--ink-mid);
+}
+
+.chat-plate .row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 6px 0 2px;
+}
+
+select.word {
+  color-scheme: dark;
+  cursor: pointer;
 }
 
 input.word {
