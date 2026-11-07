@@ -74,6 +74,19 @@ const selectedRun = computed(() => {
 });
 watch([selectedCard, selectedRun], () => void nextTick(placePointer), { flush: "post" });
 
+/** The board's one interaction: a click there lands here with the plate already bloomed. */
+export function openMarkPlate(key: string) {
+  selected.value = key.startsWith("card:")
+    ? { kind: "card", id: Number(key.slice(5)) }
+    : { kind: "run", id: Number(key.slice(4)) };
+  const mark = marks.value.find((one) => one.key === key);
+  if (mark) {
+    if (mark.form === "waiting") dismissed.value = mark.id;
+    pointerColor.value = mark.form === "waiting" || mark.form === "notice" ? "var(--sodium)" : "var(--hair)";
+  }
+  void nextTick(() => (location.hash = "#/"));
+}
+
 /* ---------- answering: the sodium line hands its charge back to the rail ---------- */
 
 const busy = ref(false);

@@ -3,6 +3,7 @@
 import { computed, defineComponent } from "vue";
 import { connected, state } from "./session";
 import { marksOf } from "./rail";
+import { openMarkPlate } from "./overview";
 
 const marks = computed(() => (state.value ? marksOf(state.value) : []));
 const money = (value: number) => `$${value.toFixed(2)}`;
@@ -43,13 +44,20 @@ export const Board = defineComponent({
             <div class="rail-wrap">
               <div class="rail">
                 {marks.value.map((mark) => (
-                  <span key={mark.key} class="rail-line" data-key={mark.key} title={mark.title}>
+                  <button
+                    key={mark.key}
+                    class="rail-line"
+                    data-key={mark.key}
+                    title={`${mark.title} · 点开看详情`}
+                    aria-label={`${mark.rule} ${mark.label}`}
+                    onClick={() => openMarkPlate(mark.key)}
+                  >
                     <span class="stem-slot">
                       <span class={["stem", mark.form]} style={{ "--wl": mark.wl } as any} />
                       {mark.form === "waiting" && <span class="stem waiting" aria-hidden="true" />}
                     </span>
                     <span class="rail-tag">{mark.label}</span>
-                  </span>
+                  </button>
                 ))}
               </div>
               <div class="baseline" />

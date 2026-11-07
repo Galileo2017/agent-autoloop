@@ -754,6 +754,10 @@ input.word::placeholder {
   font-size: 15px;
 }
 
+.board .rail-line {
+  cursor: pointer;
+}
+
 .board .legend {
   font-size: 15px;
 }
