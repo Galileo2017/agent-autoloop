@@ -100,12 +100,20 @@ const press = async (card: CardView, body: { choice?: number; text?: string }) =
 
 const lines = ref<string[]>([]);
 const showing = ref(false);
-watch([selectedRun, showing], async () => {
-  if (!selectedRun.value || !showing.value) return;
+// The why log is prefetched the moment a plate opens and cached for the session: clicking 看经过
+// should render instantly, and the fetch latency hides behind the plate bloom.
+const whyCache = new Map<number, string[]>();
+watch(selectedRun, async (run) => {
+  showing.value = false;
+  lines.value = whyCache.get(run?.id ?? -1) ?? [];
+  if (!run || whyCache.has(run.id)) return;
   try {
-    lines.value = timelineOf(selectedRun.value.id, await fetchWhy(selectedRun.value.id));
+    const told = timelineOf(run.id, await fetchWhy(run.id));
+    whyCache.set(run.id, told);
+    if (selectedRun.value?.id === run.id) lines.value = told;
   } catch {
-    lines.value = ["读不日志，稍后再试。"];
+    whyCache.set(run.id, ["读不日志，稍后再试。"]);
+    if (selectedRun.value?.id === run.id) lines.value = whyCache.get(run.id)!;
   }
 });
 
@@ -386,7 +394,7 @@ export const Overview = defineComponent({
                           );
                         })
                       ) : (
-                        <span>正在读日志…</span>
+                        <span>正在读日志，几秒内就好…</span>
                       )}
                     </div>
                   )}

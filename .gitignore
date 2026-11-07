@@ -3,3 +3,4 @@ node_modules/
 *.log
 .claude/
 .impeccable/review/
+docs/10-help/
