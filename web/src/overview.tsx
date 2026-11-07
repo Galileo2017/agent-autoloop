@@ -256,7 +256,7 @@ export const Overview = defineComponent({
               {all && (
                 <>
                   <span>
-                    今日 <b>{money(all.spending.today.cost)}</b> · {all.totals.doneToday} 轮
+                    今日完成 <b>{all.totals.doneToday}</b> 轮 · <b>{money(all.spending.today.cost)}</b>
                   </span>
                   <span>
                     7 天 <b>{money(all.spending.week.cost)}</b>

@@ -24,7 +24,7 @@ export const Board = defineComponent({
               </span>
               {all && (
                 <span>
-                  今日 <b>{money(all.spending.today.cost)}</b> · {all.totals.doneToday} 轮
+                  今日完成 <b>{all.totals.doneToday}</b> 轮 · <b>{money(all.spending.today.cost)}</b>
                 </span>
               )}
               <a href="#/" style={{ color: "var(--ink-mid)" }}>
