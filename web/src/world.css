@@ -484,6 +484,62 @@ select.word {
   cursor: pointer;
 }
 
+/* 发射记录: the person's own launches, newest first; a row is a door into the run's plate. */
+.mine {
+  margin-top: 12px;
+}
+
+.mine-head {
+  font-size: 14px;
+  color: var(--ink-mid);
+  letter-spacing: 0.06em;
+  padding: 6px 2px 2px;
+}
+
+.mine-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--hair);
+  padding: 8px 2px;
+  cursor: pointer;
+  min-height: 38px;
+}
+
+.mine-row:hover {
+  background: var(--g1);
+}
+
+.mine-row:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.mine-state {
+  color: var(--ink-mid);
+  min-width: 56px;
+  flex: none;
+}
+
+.mine-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mine-id {
+  color: var(--ink-faint);
+  flex: none;
+}
+
 input.word {
   font: inherit;
   min-height: 44px;

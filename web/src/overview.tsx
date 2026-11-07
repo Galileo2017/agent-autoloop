@@ -176,6 +176,34 @@ const launch = async () => {
   busy.value = false;
 };
 
+/* ---------- 发射记录: the person's own launched tasks, newest first, one tap to the plate ---------- */
+
+const STATE_WORDS: Record<string, string> = {
+  queued: "排队",
+  claimed: "在跑",
+  unknown: "不确定",
+  done: "完成",
+  nothing: "没事可做",
+  cancelled: "已停止",
+};
+const stateWord = (run: RunView) =>
+  run.stopping
+    ? "正在停"
+    : run.state === "queued" && run.attempts > 0
+      ? "等重派"
+      : (STATE_WORDS[run.state] ?? run.state);
+const taskText = (run: RunView) => {
+  const own = (run.events ?? []).find((event) => event.source === "owner");
+  return own?.summary || own?.subject || run.summary || run.error || "（无说明）";
+};
+const mine = computed(() =>
+  (state.value?.runs ?? []).filter((run) => (run.events ?? []).some((event) => event.source === "owner")).slice(0, 5),
+);
+const openRun = (id: number) => {
+  const mark = marks.value.find((one) => one.key === `run:${id}`);
+  if (mark) choose(mark);
+};
+
 /* ---------- legend ---------- */
 
 const workers = computed(() => {
@@ -366,6 +394,18 @@ export const Overview = defineComponent({
               )}
               {showHelp.value && <LaunchHelp options={typeOptions.value} onLaunch={chatLaunch} />}
             </div>
+            {all && mine.value.length > 0 && (
+              <div class="mine">
+                <div class="mine-head">发射记录 · 点一行看经过</div>
+                {mine.value.map((run) => (
+                  <button key={run.id} class="mine-row" onClick={() => openRun(run.id)}>
+                    <span class="mine-state">{stateWord(run)}</span>
+                    <span class="mine-text">{taskText(run)}</span>
+                    <span class="mine-id">#{run.id}</span>
+                  </button>
+                ))}
+              </div>
+            )}
             {all && marks.value.length === 0 && !showHelp.value && (
               <div class="empty-hint">还没有轮次。发射一根线，或点「怎么填？」让指导带你走一遍。</div>
             )}
