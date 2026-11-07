@@ -33,9 +33,12 @@ export const Board = defineComponent({
           </header>
           {!connected.value && <div class="banner">中台连不上了，正在重试。</div>}
           <main class="stage">
-            <div />
             {all && marks.value.length === 0 && (
               <div class="empty-hint">安静。什么在跑，什么在等，都会出现在这根轨上。</div>
+            )}
+            {/* Nothing burning: say so at reading distance instead of showing a bare void. */}
+            {all && marks.value.length > 0 && !marks.value.some((mark) => mark.form !== "stub") && (
+              <div class="board-quiet">今天 {all.totals.doneToday} 轮全部完成 · 等你 0</div>
             )}
             <div class="rail-wrap">
               <div class="rail">

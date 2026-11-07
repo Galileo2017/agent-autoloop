@@ -718,6 +718,38 @@ input.word::placeholder {
   font-size: 19px;
 }
 
+/* The rail sits mid-screen: what burns stands on the datum, the quiet hours hang above it. */
+.board .stage {
+  grid-template-rows: 1fr auto 1fr;
+}
+
+.board .rail-wrap {
+  grid-row: 2;
+}
+
+.board .empty-hint {
+  position: static;
+  align-self: center;
+  text-align: center;
+  margin: 0;
+}
+
+.board .board-quiet {
+  grid-row: 1;
+  align-self: end;
+  justify-self: center;
+  text-align: center;
+  font-size: 19px;
+  color: var(--ink-mid);
+  letter-spacing: 0.04em;
+  padding-bottom: 20px;
+}
+
+.board .stem.stub {
+  height: 26px;
+  opacity: 0.5;
+}
+
 .board .rail-tag {
   font-size: 15px;
 }
